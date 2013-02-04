@@ -26,13 +26,13 @@ e.commands.addCommand({ name: "markdown",
                             mac: "Command-M"
                         },
                         exec: function (t) {
-                                  /*
-                            var n = e.getSession().getMode().$id;
-                            if (n == "ace/mode/markdown") {
-                                showResult(converter.makeHtml(t.getValue()));
-                            }
-                            */
-                                  showResult(converter.makeHtml(t.getValue()));
+                            /*
+                             var n = e.getSession().getMode().$id;
+                             if (n == "ace/mode/markdown") {
+                             showResult(converter.makeHtml(t.getValue()));
+                             }
+                             */
+                            showResult(converter.makeHtml(t.getValue()));
                         },
                         readOnly: true });
 
@@ -57,6 +57,56 @@ e.commands.addCommand({ name: "load",
                         },
                         readOnly: true });
 
+e.commands.addCommand({ name: "reset",
+                        bindKey: {
+                            win: "Ctrl-Q",
+                            mac: "Ctrl-Q"
+                        },
+                        exec: function (t) {
+                            t.setValue('', 0);
+                        },
+                        readOnly: true });
+
 e.getSession().on('change', function(t) {
     showResult(converter.makeHtml(e.getValue()));
 });
+
+// initial readme;
+
+var readme = "# MD-editor\n\
+\n\
+> A markdown editor with real-time preview.  \n\
+Inspired by this post: [One line browser notepad](https://coderwall.com/p/lhsrcq)  \n\
+And many thanks to this [piece of code](http://pastebin.com/raw.php?i=NzbtwjEy)\n\
+\n\
+---\n\
+\n\
+## Useage:\n\
+\n\
+> * Open the md-editor.html file\n\
+* For Mac\n\
+    - Command-L: load file\n\
+    - Command-S: save file\n\
+* For Windows\n\
+    - Ctrl-L: load file\n\
+    - Ctrl-S: save file\n\
+* other built-in shorcuts\n\
+* C-p: move to the previous line\n\
+* C-n: move to the next line\n\
+* C-f: move forward a character\n\
+* C-b: move backward a character\n\
+* C-a: move to the beginning of the line\n\
+* C-e: move to the end of the line\n\
+* C-d: delete forward\n\
+* C-h: delete backward\n\
+* C-k: delete the rest of the line\n\
+* __C-q__: reset content;\n\
+* And others\n\
+\n\
+\n\
+## TODO:\n\
+\n\
+- make a chrome extension or something?\n\
+- Connnect to google driver?";
+
+e.setValue(readme, 0);
