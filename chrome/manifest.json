@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2, 
+    "name": "md-editor",
+    "version": "1.0",
+    "permissions": [
+        "tabs"
+        ],
+    "app": {
+        "background": {
+            "scripts": ["main.js"]
+        }
+    }
+}
