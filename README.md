@@ -1,8 +1,8 @@
 # MD-editor
 
-A markdown editor with real-time preview.
-Inspired by this post: [One line browser notepad](https://coderwall.com/p/lhsrcq)
-And many thanks to this [piece of code](http://pastebin.com/raw.php?i=NzbtwjEy)
+A markdown editor with real-time preview.  
+Inspired by this post: [One line browser notepad](https://coderwall.com/p/lhsrcq)  
+And many thanks to this [piece of code](http://pastebin.com/raw.php?i=NzbtwjEy)  
 
 ---
 
