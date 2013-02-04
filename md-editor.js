@@ -9,8 +9,8 @@ function readFile (evt) {
 
 document.getElementById('file').addEventListener('change', readFile, false);
 
-function showResult(e) {
-    consoleEl.innerHTML = e;
+function showResult(content) {
+    consoleEl.innerHTML = content;
 }
 
 var e = ace.edit("editor");
@@ -26,10 +26,13 @@ e.commands.addCommand({ name: "markdown",
                             mac: "Command-M"
                         },
                         exec: function (t) {
+                                  /*
                             var n = e.getSession().getMode().$id;
                             if (n == "ace/mode/markdown") {
                                 showResult(converter.makeHtml(t.getValue()));
                             }
+                            */
+                                  showResult(converter.makeHtml(t.getValue()));
                         },
                         readOnly: true });
 
@@ -39,7 +42,8 @@ e.commands.addCommand({ name: "save",
                             mac: "Command-S"
                         },
                         exec: function (t) {
-                            window.location = "data:application/octet-stream," + t.getValue();
+                            // alert(t.getValue());
+                            window.location = "data:application/octet-stream," + escape(t.getValue());
                         },
                         readOnly: true });
 
@@ -52,3 +56,7 @@ e.commands.addCommand({ name: "load",
                             document.getElementById("file").click();
                         },
                         readOnly: true });
+
+e.getSession().on('change', function(t) {
+    showResult(converter.makeHtml(e.getValue()));
+});
