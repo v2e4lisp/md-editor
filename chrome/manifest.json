@@ -1,10 +1,10 @@
 {
-    "manifest_version": 2, 
+    "manifest_version": 2,
     "name": "md-editor",
     "version": "1.0",
     "permissions": [
-        "tabs"
-        ],
+        {"fileSystem": ["write"]}
+    ],
     "app": {
         "background": {
             "scripts": ["main.js"]
