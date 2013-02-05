@@ -1,8 +1,8 @@
 # MD-editor
-Inspired by this post: [One line browser notepad](https://coderwall.com/p/lhsrcq)
+Inspired by this post: [One line browser notepad](https://coderwall.com/p/lhsrcq)    
 And many thanks to this [piece of code](http://pastebin.com/raw.php?i=NzbtwjEy)
-and [this](https://github.com/GoogleChrome/chrome-app-samples/tree/master/text-editor).
-Actually this app is just a combination of the codes above. It's all messd up.
+and [this](https://github.com/GoogleChrome/chrome-app-samples/tree/master/text-editor).      
+Actually this app is just a combination of the codes above. It's all messd up.  
 I'll try to make them decent in the near future or maybe you can help me. :)
 
 
