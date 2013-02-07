@@ -1,51 +1,46 @@
 <style type="text/css">
-    #file{ visibility: hidden;}
-    .e {
-        position: absolute;
-        top: 0;
-        right: 50%;
-        bottom: 0;
-        left: 0;
-    }
-    .c {
-        position: absolute;
-        overflow: auto;
-        background-image: url('bg.png');
-        padding-left:20px;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 50%;
-    }
-  #message {
-  top: 1%;
-  right: 0;
-  position: fixed;
-  /*border-bottom-left-radius: 5px;*/
-  padding: 10px;
-  text-align:center;
-  opacity: 0.5;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 5px 5px 5px 5px;
-  width: 10%;
-  height: 5%;
-  min-width: 200px;
-  /*-webkit-transition: opacity 0.2s ease-out;*/
-  }
-  #file-info {
-      bottom: 1%;
-  right: 0;
-  padding-left: 15px;
-  padding-right:15px;
-  position: fixed;
-  text-align: center;
-  /*border-bottom-left-radius: 5px;*/
-  opacity: 0.5;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 5px 5px 5px 5px;
-  min-width: 200px;
-  /*-webkit-transition: opacity 0.2s ease-out;*/
-  }
+#file{ visibility: hidden;}
+.e {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    bottom: 3%;
+    left: 0;
+}
+.c {
+    position: absolute;
+    overflow: auto;
+    background-image: url('bg.png');
+    padding-left:20px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+}
+#message {
+    top: 1%;
+    right: 0;
+    position: fixed;
+    padding: 10px;
+    text-align:center;
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px 5px 5px 5px;
+    width: 10%;
+    height: 5%;
+    min-width: 200px;
+}
+#file-info {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    /*opacity: 0.5;*/
+    background-color: black;
+    width: 50%;
+    height: 3%;
+    color: white;
+}
 
 </style>
 <input type="file" id="file"/>

@@ -94,13 +94,16 @@ var gotWritable = false;
 var modeDescription = '';
 
 function updatePathTo(aPath) {
-    return;
+   document.getElementById('file-info').innerHTML = aPath;
 }
 
 function updatePath() {
-    return;
+  if (fileEntry) {
+    chrome.fileSystem.getDisplayPath(fileEntry, updatePathTo);
+  } else {
+    updatePathTo('[new file]');
+  }
 }
-
 function updateModeForBaseName(aBaseName) {
     return;
 }
