@@ -6,70 +6,73 @@ var consoleEl = document.getElementsByClassName("c")[0];
 var converter = new Showdown.converter;
 
 function showResult(content) {
-    consoleEl.innerHTML = content;
+  consoleEl.innerHTML = content;
 }
 
 editor.commands.addCommand({ name: "markdown",
                              bindKey: {
-                                 win: "Ctrl-M",
-                                 mac: "Command-M"
+                               win: "Ctrl-Y",
+                               mac: "Ctrl-S"
                              },
                              exec: function (t) {
-                                 showResult(converter.makeHtml(t.getValue()));
+                               showResult(converter.makeHtml(t.getValue()));
                              },
                              readOnly: true });
 
 editor.commands.addCommand({ name: "save",
                              bindKey: {
-                                 win: "Ctrl-S",
-                                 mac: "Command-S"
+                               win: "Ctrl-S",
+                               mac: "Command-S"
                              },
                              exec: function (t) {
-                                 saveFile();
+                               saveFile();
+
                              },
                              readOnly: true });
 
 editor.commands.addCommand({ name: "open",
                              bindKey: {
-                                 win: "Ctrl-L",
-                                 mac: "Command-L"
+                               win: "Ctrl-L",
+                               mac: "Command-L"
                              },
                              exec: function (t) {
-                                 openFile()
+                               openFile();
+
                              },
                              readOnly: true });
 
 editor.commands.addCommand({ name: "reset",
                              bindKey: {
-                                 win: "Ctrl-Q",
-                                 mac: "Ctrl-Q"
+                               win: "Ctrl-Q",
+                               mac: "Ctrl-Q"
                              },
                              exec: function (t) {
-                                 createNew();
+                               createNew();
+                               showMessage("Opened new file");
                              },
                              readOnly: true });
 
 editor.getSession().on('change', function(t) {
-    showResult(converter.makeHtml(editor.getSession().getValue()));
+  showResult(converter.makeHtml(editor.getSession().getValue()));
 });
 
 // initial readme;
 
 var readme = "# MD-editor\n\
-> A markdown editor with real-time preview.  \n\
+  > A markdown editor with real-time preview.  \n\
 \n\
 ---\n\
 \n\
 ## Useage:\n\
 \n\
-> * Open the md-editor.html file\n\
-* For Mac\n\
+  > * Open the md-editor.html file\n\
+  * For Mac\n\
   - Command-L: load file\n\
   - Command-S: save/save-as file\n\
-* For Windows\n\
+  * For Windows\n\
   - Ctrl-L: load file\n\
   - Ctrl-S: save/save-as file\n\
-* Tricks that help you edit\n\
+  * Tricks that help you edit\n\
   - C-p: move to the previous line\n\
   - C-n: move to the next line\n\
   - C-f: move forward a character\n\
@@ -80,21 +83,33 @@ var readme = "# MD-editor\n\
   - C-h: delete backward\n\
   - C-k: delete the rest of the line\n\
   - __C-q__: reset content;\n\
-* And others\n\
+  * And others\n\
 \n\
 \n\
 ## TODO:\n\
-- Connnect to google driver?";
+  - Connnect to google driver?";
 
 createNew();
 editor.getSession().setValue(readme, 0);
 
 var fileEntry;
 var gotWritable = false;
+var filePath = "";
 var modeDescription = '';
 
+function showMessage(message) {
+  var messageBox = document.getElementById('message-box');
+  messageBox.innerHTML = message;
+  messageBox.className = "fade-in";
+  setTimeout(function () {
+    messageBox.className = "fade-out";
+  }, 2000);
+}
+
+
 function updatePathTo(aPath) {
-   document.getElementById('file-info').innerHTML = aPath;
+  filePath = aPath;
+  document.getElementById('file-info').innerHTML = "C-h Toggle help | "+aPath;
 }
 
 function updatePath() {
@@ -105,105 +120,107 @@ function updatePath() {
   }
 }
 function updateModeForBaseName(aBaseName) {
-    return;
+  return;
 }
 
 function showError(anError) {
-    return;
+  return;
 
 }
 
 function clearError() {
-    return;
+  return;
 }
 
 function replaceDocContentsFromString(string) {
-    editor.getSession().setValue(string);
+  editor.getSession().setValue(string);
 }
 
 function replaceDocContentsFromFile(file) {
-    if (window.FileReader) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            replaceDocContentsFromString(reader.result);
-        };
-        reader.readAsText(file);
-    }
+  if (window.FileReader) {
+    var reader = new FileReader();
+    reader.onload = function() {
+      replaceDocContentsFromString(reader.result);
+    };
+    reader.readAsText(file);
+  }
 }
 
 function replaceDocContentsFromFileEntry() {
-    fileEntry.file(replaceDocContentsFromFile);
+  fileEntry.file(replaceDocContentsFromFile);
 }
 
 function saveToEntry() {
-    fileEntry.createWriter(function(fileWriter) {
-        fileWriter.onwriteend = function(e) {
-            if (this.error)
-                gStatusEl.innerHTML = 'Error during write: ' + this.error.toString();
-            else
-                clearError();
-        };
+  fileEntry.createWriter(function(fileWriter) {
+    fileWriter.onwriteend = function(e) {
+    };
 
-        var blob = new Blob([editor.getSession().getValue()], {type: 'text/plain'});
-        fileWriter.write(blob);
-    });
+    var blob = new Blob([editor.getSession().getValue()], {type: 'text/plain'});
+    fileWriter.write(blob);
+  });
 }
 
 function setEntry(anEntry, isWritable, name) {
-    fileEntry = anEntry;
-    gotWritable = isWritable;
-    if (fileEntry) {
-        updateModeForBaseName(fileEntry.name);
-    } else if (name) {
-        updateModeForBaseName(name);
-    }
-    updatePath();
+  fileEntry = anEntry;
+  gotWritable = isWritable;
+  if (fileEntry) {
+    updateModeForBaseName(fileEntry.name);
+  } else if (name) {
+    updateModeForBaseName(name);
+  }
+  updatePath();
 }
 
 // Create a new document. This just wipes the old document.
 function createNew() {
-    replaceDocContentsFromString();
-    setEntry(null, false);
+  replaceDocContentsFromString();
+  setEntry(null, false);
+  filePath = "";
 }
 
 function openFile() {
-    chrome.fileSystem.chooseEntry(function (entry) {
-        if (chrome.runtime.lastError) {
-            showError(chrome.runtime.lastError.message);
-            return;
-        }
-        clearError();
-        setEntry(entry, false);
-        replaceDocContentsFromFileEntry();
-    });
+  chrome.fileSystem.chooseEntry(function (entry) {
+    if (chrome.runtime.lastError) {
+      showError(chrome.runtime.lastError.message);
+      return;
+    }
+    clearError();
+    setEntry(entry, false);
+    replaceDocContentsFromFileEntry();
+    showMessage("Opened file: <br/>" + filePath);
+  });
 }
 
 function saveFile() {
-    if (gotWritable) {
-        saveToEntry();
-    } else if (fileEntry) {
-        chrome.fileSystem.getWritableEntry(fileEntry, function(entry) {
-            if (chrome.runtime.lastError) {
-                showError(chrome.runtime.lastError.message);
-                return;
-            }
-            clearError();
-            setEntry(entry, true);
-            saveToEntry();
-        });
-    } else {
-        saveAs();
-    }
+  if (gotWritable) {
+    saveToEntry();
+  } else if (fileEntry) {
+    chrome.fileSystem.getWritableEntry(fileEntry, function(entry) {
+      if (chrome.runtime.lastError) {
+        showError(chrome.runtime.lastError.message);
+        return;
+      }
+      clearError();
+      setEntry(entry, true);
+      saveToEntry();
+      showMessage("Saved file: <br/>"+ filePath);
+    });
+  } else {
+    saveAs();
+  }
+
+
 }
 
 function saveAs() {
-    chrome.fileSystem.chooseEntry({type: 'saveFile'}, function(entry) {
-        if (chrome.runtime.lastError) {
-            showError(chrome.runtime.lastError.message);
-            return;
-        }
-        clearError();
-        setEntry(entry, true);
-        saveToEntry();
-    });
+  chrome.fileSystem.chooseEntry({type: 'saveFile'}, function(entry) {
+    if (chrome.runtime.lastError) {
+      showError(chrome.runtime.lastError.message);
+      return;
+    }
+    clearError();
+    setEntry(entry, true);
+    saveToEntry();
+    showMessage("Saved newly created file.");
+  });
 }
